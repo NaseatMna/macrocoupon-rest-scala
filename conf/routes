@@ -1,0 +1,143 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET         /api-docs                           controllers.Application.swagger
+GET         /api/v1/swagger.json                controllers.ApiHelpController.getResources
+
+
+#GET         /api/v1/swagger.json/todos          controllers.ApiHelpController.getResource(path = "/api/v1/swagger")
+GET         /api/v1/swagger                     controllers.SampleSwaggerController.getTodos
+POST        /api/v1/swagger                     controllers.SampleSwaggerController.postTodos
+
+
+GET         /api/v1/sample                      controllers.SampleGoogleInjectedController.index
+
+GET         /api/v1/message                     controllers.SampleCRUDController.index
+POST        /api/v1/message                     controllers.SampleCRUDController.create
+
+GET         /api/v1/message/:id                 controllers.SampleCRUDController.show(id: Int)
+PUT         /api/v1/message/:id                 controllers.SampleCRUDController.update(id: Int)
+DELETE      /api/v1/message/:id                 controllers.SampleCRUDController.delete(id: Int)
+
+
+# TEST PAGE
+GET			/test								controllers.Application.test
+
+# AUTHENTICATION
+POST		/signin						    	controllers.Auth.signIn
+POST		/signout						    controllers.Auth.signOut
+POST		/signup							    controllers.Auth.signUp
+
+
+
+# USERNAMES
+GET			/usernames					        controllers.Users.usernames
+
+# ACCOUNT
+GET			/account						    controllers.Account.info
+PUT			/account						    controllers.Account.update
+PUT			/account/password	            	controllers.Account.updatePassword
+DELETE	    /account					        controllers.Account.delete
+
+# FOLDERS
+GET			/folders						    controllers.Folders.list(sort: Option[String], page: Int ?= 1, size: Int ?= 10)
+POST		/folders					    	controllers.Folders.insert
+GET			/folders/:id			        	controllers.Folders.info(id: Long)
+PUT			/folders/:id			        	controllers.Folders.update(id: Long)
+PUT			/folders/:id/order/:newOrder	    controllers.Folders.updateOrder(id: Long, newOrder: Int)
+DELETE	    /folders/:id			            controllers.Folders.delete(id: Long)
+
+# TASKS
+GET			/folders/:id/tasks	                controllers.Tasks.list(id: Long, q: Option[String], done: Option[Boolean], sort: Option[String], page: Int ?= 1, size: Int ?= 10)
+POST		/folders/:id/tasks	                controllers.Tasks.insert(id: Long)
+GET			/tasks/:id				        	controllers.Tasks.info(id: Long)
+PUT			/tasks/:id				        	controllers.Tasks.update(id: Long)
+PUT			/tasks/:id/order/:newOrder      	controllers.Tasks.updateOrder(id: Long, newOrder: Int)
+PUT			/tasks/:id/folder/:folder		    controllers.Tasks.updateFolder(id: Long, folder: Long)
+PUT			/tasks/:id/done			            controllers.Tasks.updateDone(id: Long, done: Boolean = true)
+DELETE	    /tasks/:id/done		                controllers.Tasks.updateDone(id: Long, done: Boolean = false)
+DELETE	    /tasks/:id				            controllers.Tasks.delete(id: Long)
+
+
+#Product Category Test
+POST        /api/v1/products                    controllers.ProductCategoryController.insertNewCategory
+GET         /api/v1/products/:id                controllers.ProductCategoryController.listCategoryById(id: Long)
+GET         /api/v1/product/:name               controllers.ProductCategoryController.listCategoryByName(name: String)
+GET			/api/v1/products                    controllers.ProductCategoryController.listAllCategory(sort: Option[String], page: Int ?= 1, size: Int ?= 10)
+PUT         /api/v1/products/:id                controllers.ProductCategoryController.updateCategoryById(id: Long)
+DELETE      /api/v1/products/:id                controllers.ProductCategoryController.deleteCategoryById(id: Long)
+
+#User Test
+POST        /api/v1/users                        controllers.UserController.insert
+GET         /api/v1/users/:id                    controllers.UserController.listUserById(id:Long)
+GET         /api/v1/users                        controllers.UserController.listAllUser(sort: Option[String], page: Int ?=1, size: Int ?=10)
+PUT         /api/v1/users/:id                    controllers.UserController.update(id:Long)
+DELETE      /api/v1/users/:id                    controllers.UserController.deleteUserById(id:Long)
+GET          /users/sendmail                     controllers.UserController.send
+POST        /api/v1/users/login                  controllers.UserController.login
+POST        /api/v1/users/logout                 controllers.UserController.logout
+POST        /api/v1/users/register               controllers.UserController.regist
+GET         /api/v1/users/activate/:token        controllers.UserController.activate(token:String)
+
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET			/assets/*file				         controllers.Assets.versioned(path="/public", file: Asset)
+
+
+# SHOW FAKE DB DATA
+# Auxiliar to check the FakeDB information. It's only for testing purpose. You should remove it.
+GET			/fakeDB							    controllers.Application.fakeDB
+
+
+# STORE
+GET         /api/v1/liststores                  controllers.StoreController.listStores()
+GET         /api/v1/store/:id                   controllers.StoreController.getStoreById(id: Long)
+GET         /api/v1/stores/:name                controllers.StoreController.listStoreByName(name: String)
+POST        /api/v1/store                       controllers.StoreController.insertStore()
+PUT         /api/v1/store/:id                   controllers.StoreController.updateStoreById(id: Long)
+DELETE      /api/v1/store/:id                   controllers.StoreController.deleteStoreById(id: Long)
+# GET         /api/v1/stores                    controllers.StoreController.listAllStores(sort: Option[String], page: Int ?= 1, size: Int ?= 10)
+GET         /api/v1/sortstores                  controllers.StoreController.sortStores(mode: String ?="asc")
+GET         /api/v1/pagistores                  controllers.StoreController.paginationStores(page: Int ?=1, limit: Int ?=5)
+
+
+# Category Of Service
+POST        /api/v1/service                     controllers.ServicesCategoryController.insertService()
+GET         /api/v1/services/:id                controllers.ServicesCategoryController.getServiceByID(id: Long)
+GET         /api/v1/service/:name               controllers.ServicesCategoryController.getServiceByName(name: String)
+GET         /api/v1/services                    controllers.ServicesCategoryController.getListAllService(sort: Option[String], page: Int ?=1, size: Int ?=10)
+PUT         /api/v1/service/:id                 controllers.ServicesCategoryController.updateServiceByID(id : Long)
+DELETE      /api/v1/sercice/:id                 controllers.ServicesCategoryController.deleteServiceCategoryByID(id: Long)
+
+#Test
+GET         /api/v1/product                     controllers.ProductController.listProducts
+POST        /api/v1/product                     controllers.ProductController.insertProduct
+
+
+#MERCHANTS
+POST         /api/v1/merchants                  controllers.MerchantsController.insert
+GET          /api/v1/merchants/:id              controllers.MerchantsController.listUserById(id:Long)
+GET          /api/v1/merchants                  controllers.MerchantsController.listAllUser(sort: Option[String], page: Int ?=1, size: Int ?=10)
+PUT          /api/v1/merchants/:id              controllers.MerchantsController.update(id:Long)
+DELETE       /api/v1/merchants/:id              controllers.MerchantsController.deleteUserById(id:Long)
+GET          /merchants/sendmail                controllers.MerchantsController.send
+POST         /api/v1/merchants/login            controllers.MerchantsController.login
+POST         /api/v1/merchants/logout           controllers.MerchantsController.logout
+POST         /api/v1/merchants/register         controllers.MerchantsController.regist
+GET          /api/v1/merchants/activate/:token  controllers.MerchantsController.activate(token:String)
+
+
+#ADMIN
+POST         /api/v1/admin                      controllers.AdminController.insert
+GET          /api/v1/admin/:id                  controllers.AdminController.listUserById(id:Long)
+GET          /api/v1/admin                      controllers.AdminController.listAllUser(sort: Option[String], page: Int ?=1, size: Int ?=10)
+PUT          /api/v1/admin/:id                  controllers.AdminController.update(id:Long)
+DELETE       /api/v1/admin/:id                  controllers.AdminController.deleteUserById(id:Long)
+GET          /admin/sendmail                    controllers.AdminController.send
+POST         /api/v1/admin/login                controllers.AdminController.login
+POST         /api/v1/admin/logout               controllers.AdminController.logout
+POST         /api/v1/admin/register             controllers.AdminController.regist
+
+
